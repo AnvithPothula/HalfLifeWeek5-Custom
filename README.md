@@ -113,13 +113,15 @@ The full bill of materials is in [BOM.csv](BOM.csv):
 | Item | Qty | Supplier | Cost/item | Total cost | Link |
 | --- | ---: | --- | ---: | ---: | --- |
 | ESP32-S3-Zero (no headers) | 1 | AliExpress | $4.32 | $4.32 | [AliExpress](https://www.aliexpress.us/item/3256807949476561.html) |
-| 0.96" OLED 128x64 I2C (SSD1306, white 2-pack) | 1 | AliExpress | $4.41 | $4.41 | [AliExpress](https://www.aliexpress.us/item/3256805954920554.html) |
-| 27mm piezo with wires (10-pack) | 1 | AliExpress | $4.71 | $4.71 | [AliExpress](https://www.aliexpress.us/item/3256806921009045.html) |
+| 0.96" OLED 128x64 I2C (SSD1306, white 2-pack) | 1 | AliExpress | $4.40 | $4.40 | [AliExpress](https://www.aliexpress.us/item/3256805954920554.html) |
+| 27mm piezo with wires (10-pack) | 1 | AliExpress | $4.70 | $4.70 | [AliExpress](https://www.aliexpress.us/item/3256806921009045.html) |
 | 3x AA battery holder with switch | 1 | AliExpress | $1.44 | $1.44 | [AliExpress](https://www.aliexpress.us/item/2255800794307346.html) |
 | 1N5819 Schottky diode (50-pack) | 1 | AliExpress | $1.32 | $1.32 | [AliExpress](https://www.aliexpress.us/item/3256801365779334.html) |
 | MX switches and keycaps (spare from Week 1) | 5 | — | $0.00 | $0.00 | — |
 | 10k resistors (spare from Week 1) | 2 | — | $0.00 | $0.00 | — |
 | 10uF 0805 capacitor (spare from Week 4) | 1 | — | $0.00 | $0.00 | — |
 | PCB | 1 | JLCPCB | $4.00 | $4.00 | [JLCPCB](https://jlcpcb.com/) |
-| Estimated shipping and tax | — | — | — | $8.16 | — |
-| **Estimated total** |  |  |  | **$28.36** |  |
+| Shipping (AliExpress Choice) | — | AliExpress | — | $0.00 | — |
+| Shipping (JLCPCB Global Standard Direct Line) | — | JLCPCB | — | $8.78 | — |
+| Estimated sales tax (8.125% on AliExpress parts) | — | — | — | $1.31 | — |
+| **Estimated total** |  |  |  | **$30.27** |  |
