@@ -117,12 +117,11 @@ The full bill of materials is in [BOM.csv](BOM.csv):
 | 27mm piezo with wires (10-pack) | 1 | AliExpress | $4.70 | $4.70 | [AliExpress](https://www.aliexpress.us/item/3256806921009045.html) |
 | 3x AA battery holder with switch | 1 | AliExpress | $1.44 | $1.44 | [AliExpress](https://www.aliexpress.us/item/2255800794307346.html) |
 | 1N5819 Schottky diode (50-pack) | 1 | AliExpress | $1.32 | $1.32 | [AliExpress](https://www.aliexpress.us/item/3256801365779334.html) |
-| MX switches (10-pack, red) | 1 | AliExpress | $1.88 | $1.88 | [AliExpress](https://www.aliexpress.us/item/3256807066857216.html) |
-| Keycaps (10-pack, red) | 1 | AliExpress | $2.32 | $2.32 | [AliExpress](https://www.aliexpress.us/item/3256807312571573.html) |
-| 10k resistors (spare from Week 4) | 2 | — | $0.00 | $0.00 | — |
+| MX switches and keycaps (spare from Week 1) | 5 | — | $0.00 | $0.00 | — |
+| 10k resistors (spare from Week 1) | 2 | — | $0.00 | $0.00 | — |
 | 10uF 0805 capacitor (spare from Week 4) | 1 | — | $0.00 | $0.00 | — |
 | PCB | 1 | JLCPCB | $4.00 | $4.00 | [JLCPCB](https://jlcpcb.com/) |
 | Shipping (AliExpress Choice) | — | AliExpress | — | $0.00 | — |
-| Shipping (JLCPCB Global Standard Direct Line) | — | JLCPCB | — | $3.78 (-$5 coupon) | — |
-| Estimated sales tax (8.125% on AliExpress parts) | — | — | — | $1.66 | — |
-| **Estimated total** |  |  |  | **$29.82** |  |
+| Shipping (JLCPCB Global Standard Direct Line) | — | JLCPCB | — | $8.78 | — |
+| Estimated sales tax (8.125% on AliExpress parts) | — | — | — | $1.31 | — |
+| **Estimated total** |  |  |  | **$30.27** |  |
