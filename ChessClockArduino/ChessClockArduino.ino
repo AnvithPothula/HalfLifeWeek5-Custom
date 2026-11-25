@@ -178,7 +178,7 @@ void initButton(Button& b) {
 void updateButton(Button& b, unsigned long now) {
   b.pressedEvent = b.shortEvent = b.longEvent = b.repeatEvent = false;
   bool rd = digitalRead(b.pin) == LOW;
-  if (rd != b.lastRead) { b.lastRead = rd; b.changedAt = now; }
+  if(rd != b.lastRead) { b.lastRead = rd; b.changedAt = now; }
   if (now - b.changedAt >= DEBOUNCE_MS && rd != b.stableDown) {
     b.stableDown = rd;
     if (rd) {
@@ -186,7 +186,7 @@ void updateButton(Button& b, unsigned long now) {
       b.pressedAt = now;
       b.longDone = false;
       b.nextRepeatAt = now + REPEAT_DELAY_MS;
-    } else if (!b.longDone) {
+    } else if(!b.longDone) {
       b.shortEvent = true; // short = released before the long press fired
     }
   }
@@ -232,7 +232,7 @@ uint8_t colorOnSide(uint8_t side) {
 
 TimeControl activeTimeControl() {
   TimeControl tc;
-  if (settings.presetIndex < NUM_PRESETS) {
+  if(settings.presetIndex < NUM_PRESETS) {
     const Preset& p = PRESETS[settings.presetIndex];
     tc.whiteMs = (uint32_t)p.minutes * 60000UL;
     tc.blackMs = tc.whiteMs;
@@ -278,7 +278,7 @@ String batteryText() {
 }
 
 void updateBattery(unsigned long now) {
-  if (batteryReadAt != 0 && now - batteryReadAt < 5000) return;
+  if(batteryReadAt != 0 && now - batteryReadAt < 5000) return;
   batteryReadAt = now;
   long sum = 0;
   for (int i = 0; i < 8; i++) sum += analogReadMilliVolts(PIN_BATTERY); // average out the noise
@@ -297,13 +297,13 @@ void startBeeps(int count, uint16_t onMs, uint16_t offMs, uint16_t freq) {
 }
 
 void updateBeeps(unsigned long now) {
-  if (beepsLeft == 0 && !beepOn) return;
+  if(beepsLeft == 0 && !beepOn) return;
   if ((long)(now - beepNextAt) < 0) return;
   if (beepOn) {
     ledcWriteTone(PIN_BUZZER, 0);
     beepOn = false;
     beepNextAt = now + beepOffMs;
-  } else if (beepsLeft > 0) {
+  } else if(beepsLeft > 0) {
     ledcWriteTone(PIN_BUZZER, beepFreq);
     beepOn = true;
     beepsLeft--;
@@ -328,7 +328,7 @@ void loadSettings() {
   settings.customBlackMin = constrain(settings.customBlackMin, 1, 180);
   settings.customBonusSec = constrain(settings.customBonusSec, 0, 60);
   if (settings.customMode > MODE_DELAY) settings.customMode = MODE_INCREMENT;
-  if (settings.whiteSide > SIDE_RIGHT) settings.whiteSide = SIDE_LEFT;
+  if(settings.whiteSide > SIDE_RIGHT) settings.whiteSide = SIDE_LEFT;
 }
 
 void saveSettings() {
@@ -406,7 +406,7 @@ void finishGame(const char* result) {
 }
 
 void advanceClock(uint32_t untilMs) {
-  if (appState != STATE_RUNNING) return;
+  if(appState != STATE_RUNNING) return;
   if ((int32_t)(untilMs - lastTickMs) <= 0) return;
   uint32_t dt = untilMs - lastTickMs;
   lastTickMs = untilMs;
@@ -417,7 +417,7 @@ void advanceClock(uint32_t untilMs) {
     delayLeftMs -= used;
     dt -= used;
   }
-  if (dt >= remainingMs[activeColor]) { // flag
+  if(dt >= remainingMs[activeColor]) { // flag
     remainingMs[activeColor] = 0;
     flaggedColor = activeColor;
     startBeeps(1, 1500, 0, 2000);
@@ -436,7 +436,7 @@ void endTurn(uint32_t atMs) {
   // the isr press time can be a bit before the last tick, dont go backwards
   if ((int32_t)(atMs - lastTickMs) < 0) atMs = lastTickMs;
   advanceClock(atMs);
-  if (appState != STATE_RUNNING) return;
+  if(appState != STATE_RUNNING) return;
 
   if (currentGame.mode == MODE_INCREMENT) {
     remainingMs[activeColor] += (uint32_t)currentGame.bonusSec * 1000UL;
@@ -452,18 +452,18 @@ void handlePlayerKeys() {
   unsigned long pressAt[2];
   // copy out what the isr saw
   noInterrupts();
-  for (int side = 0; side < 2; side++) {
+  for(int side = 0; side < 2; side++) {
     pending[side] = playerPressPending[side];
     pressAt[side] = playerPressAt[side];
     playerPressPending[side] = false;
   }
   interrupts();
 
-  for (int side = 0; side < 2; side++) {
+  for (int side=0; side<2; side++) {
     if (!pending[side]) continue;
     lastActivityAt = millis();
     uint8_t color = colorOnSide(side);
-    if (appState == STATE_READY && color == COLOR_BLACK) {
+    if(appState == STATE_READY && color == COLOR_BLACK) {
       startGame((uint32_t)pressAt[side]); // black hits the clock to start white, like a real one
     } else if (appState == STATE_RUNNING && color == activeColor) {
       endTurn((uint32_t)pressAt[side]);
@@ -545,7 +545,7 @@ void enterWifi() {
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   unsigned long start = millis();
   while (WiFi.status() != WL_CONNECTED && millis() - start < 15000) delay(200); // blocks, fine here
-  if (WiFi.status() == WL_CONNECTED) {
+  if(WiFi.status() == WL_CONNECTED) {
     wifiConnected = true;
     wifiIp = WiFi.localIP().toString();
     server.begin();
@@ -606,7 +606,7 @@ void handleGame() {
   JsonObject g = doc.to<JsonObject>();
   gameInfo(g, slot);
   JsonArray clocks = g["clocks"].to<JsonArray>();
-  for (int i = 0; i < loadedGame.plyCount; i++) clocks.add(loadedGame.clockMs[i]);
+  for(int i = 0; i < loadedGame.plyCount; i++) clocks.add(loadedGame.clockMs[i]);
   String out;
   serializeJson(doc, out);
   server.send(200, "application/json", out);
@@ -631,7 +631,7 @@ String urlEncode(const String& text) {
 }
 
 bool isValidStudyId(const String& id) {
-  if (id.length() != 8) return false; // lichess ids are always 8
+  if(id.length() != 8) return false; // lichess ids are always 8
   for (unsigned int i = 0; i < id.length(); i++) {
     if (!isalnum((uint8_t)id[i])) return false;
   }
@@ -661,7 +661,7 @@ void handleExport() {
   if (!isValidStudyId(studyId)) { sendExportResult(false, "The study ID should be 8 letters or numbers.", ""); return; }
   if (pgn.length() == 0 || pgn.length() > 30000) { sendExportResult(false, "The PGN is empty or too long.", ""); return; }
   if (name.length() == 0) name = "Chess clock game";
-  if (name.length() > 100) name = name.substring(0, 100);
+  if(name.length() > 100) name = name.substring(0, 100);
 
   WiFiClientSecure client;
   client.setInsecure(); // skipping cert check
@@ -685,7 +685,7 @@ void handleExport() {
       if (strlen(chId) > 0) chapterUrl += "/" + String(chId);
     }
     sendExportResult(true, "Exported to Lichess.", chapterUrl);
-  } else if (code == 401) {
+  } else if(code == 401) {
     sendExportResult(false, "Lichess rejected the token. Check LICHESS_TOKEN and its study:write scope.", "");
   } else if (code == 403 || code == 404) {
     sendExportResult(false, "Study not found, or it isn't yours.", "");
@@ -701,7 +701,7 @@ void handleExport() {
 void renderScreen(Adafruit_SSD1306& oled, const ScreenContent& sc) {
   oled.clearDisplay();
   oled.setTextSize(1);
-  if (sc.highlight) {
+  if(sc.highlight) {
     oled.fillRect(0, 0, 128, 10, SSD1306_WHITE);
     oled.setTextColor(SSD1306_BLACK);
   } else {
@@ -780,7 +780,7 @@ void buildScreen(uint8_t side, ScreenContent& sc) {
       if (side == SIDE_LEFT) {
         sc.topLeft = "Wi-Fi games";
         sc.bigSize = 1;
-        if (wifiConnecting) {
+        if(wifiConnecting) {
           sc.big = "Connecting...";
         } else if (wifiConnected) {
           sc.big = wifiIp;
@@ -802,7 +802,7 @@ void buildScreen(uint8_t side, ScreenContent& sc) {
 void drawScreens(unsigned long now, bool force) {
   if (!force && now - lastDrawAt < 40) return; // ~25fps max
   lastDrawAt = now;
-  for (uint8_t side = 0; side < 2; side++) {
+  for(uint8_t side = 0; side < 2; side++) {
     ScreenContent sc;
     buildScreen(side, sc);
     String key = sc.topLeft + "|" + sc.topRight + "|" + sc.big + "|" + String(sc.bigSize) + "|" +
@@ -823,7 +823,7 @@ void goToSleep() {
 
   const uint8_t wakePins[3] = {PIN_KEY_LEFT, PIN_KEY_RIGHT, PIN_KEY_START};
   uint64_t mask = 0;
-  for (int i = 0; i < 3; i++) {
+  for (int i=0; i<3; i++) {
     gpio_num_t pin = (gpio_num_t)wakePins[i];
     rtc_gpio_pullup_en(pin);
     rtc_gpio_pulldown_dis(pin);
@@ -835,7 +835,7 @@ void goToSleep() {
 
 void checkSleep(unsigned long now) {
   bool canSleep = (appState == STATE_READY || appState == STATE_GAME_OVER || appState == STATE_MENU);
-  if (canSleep && now - lastActivityAt > SLEEP_AFTER_MS) goToSleep();
+  if(canSleep && now - lastActivityAt > SLEEP_AFTER_MS) goToSleep();
 }
 
 // what -, start and + do depends on the state
@@ -847,7 +847,7 @@ void handleMenuKeys(unsigned long now) {
 
   int step = 0;
   if (keyMinus.pressedEvent || keyMinus.repeatEvent) step = -1;
-  if (keyPlus.pressedEvent || keyPlus.repeatEvent) step = 1;
+  if(keyPlus.pressedEvent || keyPlus.repeatEvent) step = 1;
 
   switch (appState) {
     case STATE_READY:
@@ -858,7 +858,7 @@ void handleMenuKeys(unsigned long now) {
         resetGame();
       }
       if (keyStart.shortEvent) startGame((uint32_t)now);
-      if (keyStart.longEvent) enterMenu();
+      if(keyStart.longEvent) enterMenu();
       break;
 
     case STATE_RUNNING:
@@ -869,7 +869,7 @@ void handleMenuKeys(unsigned long now) {
       break;
 
     case STATE_PAUSED:
-      if (keyStart.shortEvent) { lastTickMs = (uint32_t)now; appState = STATE_RUNNING; }
+      if(keyStart.shortEvent) { lastTickMs = (uint32_t)now; appState = STATE_RUNNING; }
       if (keyStart.longEvent) finishGame("*"); // ends + saves the game unfinished
       break;
 
@@ -879,10 +879,10 @@ void handleMenuKeys(unsigned long now) {
       break;
 
     case STATE_MENU:
-      if (step != 0) changeMenuValue(step);
+      if(step != 0) changeMenuValue(step);
       if (keyStart.shortEvent) {
         if (menuIndex == MENU_WIFI) { saveSettings(); enterWifi(); }
-        else if (menuIndex == MENU_EXIT) exitMenu();
+        else if(menuIndex == MENU_EXIT) exitMenu();
         else menuIndex = (menuIndex + 1) % NUM_MENU_ITEMS;
       }
       if (keyStart.longEvent) exitMenu();
@@ -899,7 +899,7 @@ void setup() {
   Serial.begin(115200);
 
   // the wake pins are still in rtc mode after deep sleep
-  if (esp_sleep_get_wakeup_cause() == ESP_SLEEP_WAKEUP_EXT1) {
+  if(esp_sleep_get_wakeup_cause() == ESP_SLEEP_WAKEUP_EXT1) {
     rtc_gpio_deinit((gpio_num_t)PIN_KEY_LEFT);
     rtc_gpio_deinit((gpio_num_t)PIN_KEY_RIGHT);
     rtc_gpio_deinit((gpio_num_t)PIN_KEY_START);
