@@ -225,6 +225,8 @@ uint16_t beepOnMs = 0;
 uint16_t beepOffMs = 0;
 uint16_t beepFreq = 0;
 
+void drawScreens(unsigned long now, bool force);
+
 // ---- helpers ----
 uint8_t colorOnSide(uint8_t side) {
   return (side == settings.whiteSide) ? COLOR_WHITE : COLOR_BLACK;
